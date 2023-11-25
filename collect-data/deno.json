@@ -1,0 +1,5 @@
+{
+  "tasks": {
+    "dev": "deno run --watch --allow-net --allow-write main.ts --since 1700924400 --relay wss://relay-jp.nostr.wirednet.jp"
+  }
+}
