@@ -1,5 +1,7 @@
 import re
 
+from pyknp import Juman
+
 
 def preprocess(df, authors):
     output = df[~df['author'].isin(authors)]
@@ -8,3 +10,11 @@ def preprocess(df, authors):
     output['content'] = df['content'].apply(
         lambda x: re.sub(f'{url_pattern}|{nostr_pattern}', '', x))
     return output
+
+
+def analyze(df):
+    jumanpp = Juman()
+    result = [
+        jumanpp.analysis(content) for content in df['content']
+    ]
+    return result
