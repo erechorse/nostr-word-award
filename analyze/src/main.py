@@ -1,3 +1,4 @@
+import datetime
 import re
 
 from pyknp import Juman
@@ -10,6 +11,14 @@ def preprocess(df, authors):
     output['content'] = df['content'].apply(
         lambda x: re.sub(f'{url_pattern}|{nostr_pattern}', '', x))
     return output
+
+
+def monthly_index(df):
+    outputs = {i: [] for i in range(2, 13)}
+    for _, row in df.iterrows():
+        date = datetime.datetime.fromtimestamp(row['created_at'])
+        outputs[date.month].append(row['content'])
+    return outputs
 
 
 def analyze(df):
