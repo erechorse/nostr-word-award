@@ -3,15 +3,22 @@ import { writeCSV } from "https://deno.land/x/csv@v0.9.2/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.208.0/cli/mod.ts";
 
 const args = parseArgs(Deno.args);
-const time = Number(args.since);
+const year = Number(parseArgs(args.year));
+const month = Number(parseArgs(args.month));
 const relay = String(args.relay);
 const fetcher = NostrFetcher.init();
+
+const startDate = new Date(year, month - 1);
+const endDate = new Date(year, month);
+
+const since = startDate.getTime() / 1000;
+const until = endDate.getTime() / 1000 - 1;
 
 // get all events
 const allPosts = await fetcher.fetchAllEvents(
     [relay],
     { kinds: [ eventKind.text ] },
-    { since: time},
+    { since: since, until: until },
     { skipVerification: true, sort: true }
 )
 
@@ -22,8 +29,10 @@ const data = allPosts.map(post => [
     post.content
 ]);
 
+const pad = String(month).padStart(2, "0");
+
 // save data
-const f = await Deno.open("../resource/data.csv", {
+const f = await Deno.open(`../resource/${String(year)}.${pad}.csv`, {
     write: true,
     create: true,
     truncate: true
