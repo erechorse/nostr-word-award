@@ -3,8 +3,8 @@ import { writeCSV } from "https://deno.land/x/csv@v0.9.2/mod.ts";
 import { parseArgs } from "https://deno.land/std@0.208.0/cli/mod.ts";
 
 const args = parseArgs(Deno.args);
-const year = Number(parseArgs(args.year));
-const month = Number(parseArgs(args.month));
+const year = Number(args.year);
+const month = Number(args.month);
 const relay = String(args.relay);
 const fetcher = NostrFetcher.init();
 
