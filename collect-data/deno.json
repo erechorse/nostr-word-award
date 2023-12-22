@@ -1,5 +1,5 @@
 {
   "tasks": {
-    "dev": "deno run --watch --allow-net --allow-write main.ts --since 1700924400 --relay wss://relay-jp.nostr.wirednet.jp"
+    "dev": "deno run --allow-net --allow-write main.ts --year 2023 --month 2 --relay wss://relay-jp.nostr.wirednet.jp"
   }
 }
